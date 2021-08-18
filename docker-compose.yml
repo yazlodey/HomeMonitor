@@ -27,6 +27,13 @@ services:
         aliases: 
           - pgadmin-server
 
+  dashboard:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./Grafana/data:/var/lib/grafana:rw
+
 networks:
   main_net:
     driver: bridge
