@@ -1,0 +1,17 @@
+version: '3'
+services:
+  database:
+    container_name: db
+    image: "postgres"
+    env_file:
+      - DB/database.env
+    volumes:
+      - database-data:/var/lib/postgresql/data/
+    network_mode: bridge
+    ports:
+      - "5432:5432"
+
+volumes:
+  database-data:
+
+
