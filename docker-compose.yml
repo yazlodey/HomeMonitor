@@ -1,17 +1,40 @@
-version: '3'
-services:
-  database:
-    container_name: db
-    image: "postgres"
-    env_file:
-      - DB/database.env
+version: '3.5'
+services: 
+  db-server:
+    image: postgres:alpine
     volumes:
-      - database-data:/var/lib/postgresql/data/
-    network_mode: bridge
+      - ./DB/data:/var/lib/postgresql/data:rw
+    env_file: 
+      - ./DB/env_file
+    networks:
+      main_net:
+        aliases: 
+         - db-server
+
+  pgadmin:
+    image: dpage/pgadmin4
     ports:
-      - "5432:5432"
+      - "5555:80"
+    depends_on:
+      - db-server
+    
+    environment:
+      PGADMIN_DEFAULT_EMAIL: pgadmin4@pgadmin.org
+      PGADMIN_DEFAULT_PASSWORD: admin
+    restart: unless-stopped
 
-volumes:
-  database-data:
+    networks:
+      main_net:
+        aliases: 
+          - pgadmin-server
 
+networks:
+  main_net:
+    driver: bridge
+    driver_opts: 
+      com.docker.network.enable_ipv6: "false"
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.88.0/24
 
