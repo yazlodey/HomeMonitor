@@ -17,9 +17,9 @@ services:
       - "5555:80"
     depends_on:
       - db-server
-    
-    env_file: 
-      - ./pgadmin_env
+    environment:
+      PGADMIN_DEFAULT_EMAIL: pgadmin4@pgadmin.org
+      PGADMIN_DEFAULT_PASSWORD: admin
     restart: unless-stopped
 
     networks:
