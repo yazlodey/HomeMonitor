@@ -18,9 +18,8 @@ services:
     depends_on:
       - db-server
     
-    environment:
-      PGADMIN_DEFAULT_EMAIL: pgadmin4@pgadmin.org
-      PGADMIN_DEFAULT_PASSWORD: admin
+    env_file: 
+      - ./pgadmin_env
     restart: unless-stopped
 
     networks:
